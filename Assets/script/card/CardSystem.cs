@@ -285,6 +285,16 @@ public class CardSystem : MonoBehaviour
 
         int currentPlayerIndex = gameManager?.GetCurrentPlayerIndex() ?? 0;
 
+        if (currentPlayerIndex > 0)
+            currentPlayerIndex--;
+        else
+        {
+            int playerCount = playerManager.GetPlayerCount() - 1;
+            currentPlayerIndex = playerCount;
+        }
+
+
+
         if (isCorrect)
         {
             // Recompensa por respuesta correcta
@@ -292,7 +302,7 @@ public class CardSystem : MonoBehaviour
             playerManager?.AddCredits(currentPlayerIndex, rewardAmount);
             gameManager?.ShowNotification($"¡Respuesta correcta! Ganaste {rewardAmount} créditos");
             Debug.Log($"Jugador {currentPlayerIndex + 1} respondió correctamente y ganó {rewardAmount} créditos");
-            
+
             PlayerInfoUIManager uiManager = FindObjectOfType<PlayerInfoUIManager>();
             if (uiManager != null)
             {

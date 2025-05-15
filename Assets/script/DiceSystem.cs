@@ -139,7 +139,7 @@ public class DiceSystem : MonoBehaviour
         }
 
         // Esperar un momento adicional para que se puedan ver los efectos
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(7.5f);
 
         // Cambiar al siguiente jugador
         

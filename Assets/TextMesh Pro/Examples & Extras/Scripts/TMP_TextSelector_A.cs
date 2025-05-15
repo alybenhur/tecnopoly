@@ -85,9 +85,8 @@ namespace TMPro.Examples
                     // The following provides an example of how to access the link properties.
                     //Debug.Log("Link ID: \"" + linkInfo.GetLinkID() + "\"   Link Text: \"" + linkInfo.GetLinkText() + "\""); // Example of how to retrieve the Link ID and Link Text.
 
-                    Vector3 worldPointInRectangle;
 
-                    RectTransformUtility.ScreenPointToWorldPointInRectangle(m_TextMeshPro.rectTransform, Input.mousePosition, m_Camera, out worldPointInRectangle);
+                    RectTransformUtility.ScreenPointToWorldPointInRectangle(m_TextMeshPro.rectTransform, Input.mousePosition, m_Camera, out _);
 
                     switch (linkInfo.GetLinkID())
                     {
@@ -116,7 +115,7 @@ namespace TMPro.Examples
                     TMP_WordInfo wInfo = m_TextMeshPro.textInfo.wordInfo[wordIndex];
 
                     Vector3 wordPOS = m_TextMeshPro.transform.TransformPoint(m_TextMeshPro.textInfo.characterInfo[wInfo.firstCharacterIndex].bottomLeft);
-                    wordPOS = Camera.main.WorldToScreenPoint(wordPOS);
+                    _ = Camera.main.WorldToScreenPoint(wordPOS);
 
                     //Debug.Log("Mouse Position: " + Input.mousePosition.ToString("f3") + "  Word Position: " + wordPOS.ToString("f3"));
 

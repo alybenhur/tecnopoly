@@ -228,18 +228,35 @@ public class GameManager : MonoBehaviour
     public void PurchaseArtefact(int tileIndex, int cost)
     {
         // Verificar si el jugador puede permitirse la compra
-        int playerCredits = playerManager.GetPlayerCredits(currentPlayerIndex);
+
+        int act = currentPlayerIndex;
         
+        if (act > 0)
+            act--;
+        else
+        {
+            int playerCount = playerManager.GetPlayerCount() - 1;
+            act = playerCount;
+        }
+
+
+
+        // int playerCredits = playerManager.GetPlayerCredits(currentPlayerIndex);
+        int playerCredits = playerManager.GetPlayerCredits(act);
+
         if (playerCredits >= cost)
         {
             // Realizar la compra
-            playerManager.AddCredits(currentPlayerIndex, -cost);
-            playerManager.AssignPropertyToPlayer(currentPlayerIndex, tileIndex);
+          //  playerManager.AddCredits(currentPlayerIndex, -cost);
+           // playerManager.AssignPropertyToPlayer(currentPlayerIndex, tileIndex);
+            playerManager.AddCredits(act, -cost);
+            playerManager.AssignPropertyToPlayer(act, tileIndex);
 
             purchasedArtefacts++;
 
             ShowNotification($"¡Artefacto adquirido por {cost} créditos!");
-            Debug.Log($"Jugador {currentPlayerIndex + 1} compró artefacto en casilla {tileIndex} por {cost} créditos");
+           // Debug.Log($"Jugador {currentPlayerIndex + 1} compró artefacto en casilla {tileIndex} por {cost} créditos");
+            Debug.Log($"Jugador {act + 1} compró artefacto en casilla {tileIndex} por {cost} créditos");
 
             // Actualizar UI
             UpdateUI();
@@ -247,12 +264,17 @@ public class GameManager : MonoBehaviour
             PlayerInfoUIManager uiManager = FindObjectOfType<PlayerInfoUIManager>();
             if (uiManager != null)
             {
-                uiManager.UpdatePlayerInfo(currentPlayerIndex);
+              /*  uiManager.UpdatePlayerInfo(currentPlayerIndex);
                 // AÑADIR ESTO: Forzar la actualización del indicador de turno
-                uiManager.ForceUpdateActivePlayer(currentPlayerIndex);
+                uiManager.ForceUpdateActivePlayer(currentPlayerIndex);*/
+                uiManager.UpdatePlayerInfo(act);
+                // AÑADIR ESTO: Forzar la actualización del indicador de turno
+                uiManager.ForceUpdateActivePlayer(act);
+
 
                 // Opcional: mostrar animación de cambio de créditos
-                uiManager.ShowCreditChange(currentPlayerIndex, -cost);
+                //   uiManager.ShowCreditChange(currentPlayerIndex, -cost);
+                uiManager.ShowCreditChange(act, -cost);
             }
 
             // Verificar si el juego ha terminado
@@ -261,7 +283,8 @@ public class GameManager : MonoBehaviour
         else
         {
             ShowNotification("No tienes suficientes créditos para comprar");
-            Debug.Log($"Jugador {currentPlayerIndex + 1} no tiene suficientes créditos para comprar");
+          //  Debug.Log($"Jugador {currentPlayerIndex + 1} no tiene suficientes créditos para comprar");
+            Debug.Log($"Jugador {act + 1} no tiene suficientes créditos para comprar");
         }
 
         // Cerrar panel de compra
